@@ -1,4 +1,4 @@
-﻿using CursoASPNetCoreMVC.Models;
+﻿using CursoASPNetCoreMVC.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
