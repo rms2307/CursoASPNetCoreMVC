@@ -12,7 +12,7 @@ namespace CursoASPNetCoreMVC.Models
         public ICollection<Seller> Sellers { get; set; } = new List<Seller>();
 
         public Department() { }
-        public Department(int id, string nome, ICollection<Seller> sellers)
+        public Department(int id, string nome)
         {
             Id = id;
             Nome = nome;
