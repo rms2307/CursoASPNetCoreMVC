@@ -1,4 +1,5 @@
-﻿using CursoASPNetCoreMVC.Services;
+﻿using CursoASPNetCoreMVC.Models;
+using CursoASPNetCoreMVC.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,19 @@ namespace CursoASPNetCoreMVC.Controllers
         {
             var sellers = _sellerService.FindAll();
             return View(sellers);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Seller seller)
+        {
+            _sellerService.Insert(seller);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
