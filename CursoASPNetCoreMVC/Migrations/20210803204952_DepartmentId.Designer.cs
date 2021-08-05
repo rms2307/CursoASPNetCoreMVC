@@ -3,14 +3,16 @@ using System;
 using CursoASPNetCoreMVC.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CursoASPNetCoreMVC.Migrations
 {
     [DbContext(typeof(CursoASPNetCoreMVCContext))]
-    partial class CursoASPNetCoreMVCContextModelSnapshot : ModelSnapshot
+    [Migration("20210803204952_DepartmentId")]
+    partial class DepartmentId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +24,9 @@ namespace CursoASPNetCoreMVC.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<int>("DepartmentId");
+
+                    b.Property<string>("Nome");
 
                     b.HasKey("Id");
 
@@ -58,7 +62,7 @@ namespace CursoASPNetCoreMVC.Migrations
 
                     b.Property<DateTime>("BirthDate");
 
-                    b.Property<int>("DepartmentId");
+                    b.Property<int?>("DepartmentId");
 
                     b.Property<string>("Email");
 
@@ -82,8 +86,7 @@ namespace CursoASPNetCoreMVC.Migrations
                 {
                     b.HasOne("CursoASPNetCoreMVC.Models.Department", "Department")
                         .WithMany("Sellers")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("DepartmentId");
                 });
 #pragma warning restore 612, 618
         }
