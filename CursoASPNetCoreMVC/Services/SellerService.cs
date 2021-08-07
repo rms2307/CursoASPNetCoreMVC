@@ -1,5 +1,6 @@
 ﻿using CursoASPNetCoreMVC.Data;
 using CursoASPNetCoreMVC.Models;
+using CursoASPNetCoreMVC.Services.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,22 @@ namespace CursoASPNetCoreMVC.Services
             var seller = _context.Seller.Find(id);
             _context.Seller.Remove(seller);
             _context.SaveChanges();
+        }
+
+        public void Update(Seller obj)
+        {
+            if (!_context.Seller.Any(s => s.Id == obj.Id))
+                throw new NotFoundException("Seller not found");
+
+            try
+            {
+                _context.Update(obj);
+                _context.SaveChanges();
+            }
+            catch(DbUpdateConcurrencyException e)
+            {
+                throw new DbConcurrencyException(e.Message);
+            }
         }
     }
 }
