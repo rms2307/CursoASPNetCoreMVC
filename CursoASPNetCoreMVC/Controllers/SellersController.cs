@@ -36,6 +36,13 @@ namespace CursoASPNetCoreMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Seller seller)
         {
+            if (!ModelState.IsValid)
+            {
+                var deps = _departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Seller = seller, Departments = deps };
+                return View(viewModel);
+            }
+
             _sellerService.Insert(seller);
             return RedirectToAction(nameof(Index));
         }
@@ -86,17 +93,23 @@ namespace CursoASPNetCoreMVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Seller seller)
         {
+            if (!ModelState.IsValid)
+            {
+                var deps = _departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Seller = seller, Departments = deps };
+                return View(viewModel);
+            }
             if (id != seller.Id) return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
             try
             {
                 _sellerService.Update(seller);
                 return RedirectToAction(nameof(Index));
             }
-            catch (NotFoundException e )
+            catch (NotFoundException e)
             {
                 return RedirectToAction(nameof(Error), new { message = e.Message });
             }
-            catch(DbConcurrencyException e)
+            catch (DbConcurrencyException e)
             {
                 return RedirectToAction(nameof(Error), new { message = e.Message });
             }
