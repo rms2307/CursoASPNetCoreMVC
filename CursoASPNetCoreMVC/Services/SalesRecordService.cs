@@ -17,6 +17,12 @@ namespace CursoASPNetCoreMVC.Services
             _context = context;
         }
 
+        public async Task InsertAsync(SalesRecord salesRecord)
+        {
+            _context.SalesRecord.Add(salesRecord);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<List<SalesRecord>> FindByDateAsync(DateTime? minDate, DateTime? maxDate)
         {
             var result = from obj in _context.SalesRecord select obj;
